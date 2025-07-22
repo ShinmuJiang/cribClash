@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Apartment {
+  id          Int      @id @default(autoincrement())
+  name        String   // apartment name
+  prompt1     String   // first prompt
+  prompt2     String   // second prompt
+  imageUrl    String   // main image
+  imageUrl2   String   // second image
+  imageUrl3   String   // third image
+  imageUrl4   String   // fourth image
+  address     String
+  price       Int
+  createdAt   DateTime @default(now())
+  votes       Vote[]
+}
+
+model Vote {
+  id          Int      @id @default(autoincrement())
+  apartment   Apartment @relation(fields: [apartmentId], references: [id])
+  apartmentId Int
+  value       Int      // 1 for upvote, -1 for downvote, or use for Elo
+  createdAt   DateTime @default(now())
+}

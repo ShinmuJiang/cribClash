@@ -5,19 +5,34 @@ import { useState, useRef } from "react";
 
 export default function LandingPage() {
   const [showDashboardDropdown, setShowDashboardDropdown] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [showSignInDropdown, setShowSignInDropdown] = useState(false);
+  const dashboardTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const signInTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const handleMouseEnter = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+  const handleDashboardMouseEnter = () => {
+    if (dashboardTimeoutRef.current) {
+      clearTimeout(dashboardTimeoutRef.current);
     }
     setShowDashboardDropdown(true);
   };
 
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
+  const handleDashboardMouseLeave = () => {
+    dashboardTimeoutRef.current = setTimeout(() => {
       setShowDashboardDropdown(false);
-    }, 500);
+    }, 300);
+  };
+
+  const handleSignInMouseEnter = () => {
+    if (signInTimeoutRef.current) {
+      clearTimeout(signInTimeoutRef.current);
+    }
+    setShowSignInDropdown(true);
+  };
+
+  const handleSignInMouseLeave = () => {
+    signInTimeoutRef.current = setTimeout(() => {
+      setShowSignInDropdown(false);
+    }, 300);
   };
 
   return (
@@ -37,8 +52,8 @@ export default function LandingPage() {
             {/* Dashboard with Dropdown */}
             <div 
               className="relative"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={handleDashboardMouseEnter}
+              onMouseLeave={handleDashboardMouseLeave}
             >
               <Link 
                 href="/dashboard" 
@@ -52,8 +67,8 @@ export default function LandingPage() {
               {showDashboardDropdown && (
                 <div 
                   className="absolute top-full right-0 mt-2 w-48 bg-white shadow-lg border border-gray-200 py-1 z-50 rounded-md"
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
+                  onMouseEnter={handleDashboardMouseEnter}
+                  onMouseLeave={handleDashboardMouseLeave}
                 >
                   <Link 
                     href="/upload" 
@@ -68,8 +83,8 @@ export default function LandingPage() {
             {/* Sign In with Dropdown */}
             <div 
               className="relative"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={handleSignInMouseEnter}
+              onMouseLeave={handleSignInMouseLeave}
             >
               <Link 
                 href="/signin" 
@@ -80,11 +95,11 @@ export default function LandingPage() {
               </Link>
               
               {/* Sign In Dropdown Menu */}
-              {showDashboardDropdown && (
+              {showSignInDropdown && (
                 <div 
                   className="absolute top-full right-0 mt-2 w-48 bg-white shadow-lg border border-gray-200 py-1 z-50 rounded-md"
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
+                  onMouseEnter={handleSignInMouseEnter}
+                  onMouseLeave={handleSignInMouseLeave}
                 >
                   <Link 
                     href="/saved" 

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import { useAuth } from '@/context/AuthContext';
 
@@ -7,33 +7,24 @@ export default function Header() {
   const { user, signOut } = useAuth();
   const [showDashboardDropdown, setShowDashboardDropdown] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [showSignInDropdown, setShowSignInDropdown] = useState(false);
   const dashboardTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const profileTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const signInTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleDashboardMouseEnter = () => {
     if (dashboardTimeoutRef.current) {
       clearTimeout(dashboardTimeoutRef.current);
     }
+    setShowProfileDropdown(false);
+    setShowSignInDropdown(false);
     setShowDashboardDropdown(true);
   };
 
   const handleDashboardMouseLeave = () => {
     dashboardTimeoutRef.current = setTimeout(() => {
       setShowDashboardDropdown(false);
-    }, 500);
-  };
-
-  const handleProfileMouseEnter = () => {
-    if (profileTimeoutRef.current) {
-      clearTimeout(profileTimeoutRef.current);
-    }
-    setShowProfileDropdown(true);
-  };
-
-  const handleProfileMouseLeave = () => {
-    profileTimeoutRef.current = setTimeout(() => {
-      setShowProfileDropdown(false);
-    }, 500);
+    }, 300);
   };
 
   const handleSignOut = async () => {
@@ -88,8 +79,16 @@ export default function Header() {
           {user ? (
             <div 
               className="relative"
-              onMouseEnter={handleProfileMouseEnter}
-              onMouseLeave={handleProfileMouseLeave}
+              onMouseEnter={() => {
+                if (signInTimeoutRef.current) clearTimeout(signInTimeoutRef.current);
+                setShowDashboardDropdown(false);
+                setShowProfileDropdown(true);
+              }}
+              onMouseLeave={() => {
+                profileTimeoutRef.current = setTimeout(() => {
+                  setShowProfileDropdown(false);
+                }, 300);
+              }}
             >
               {/* Circular Profile Icon */}
               <button 
@@ -103,8 +102,16 @@ export default function Header() {
               {showProfileDropdown && (
                 <div 
                   className="absolute top-full right-0 mt-2 w-48 bg-white shadow-lg border border-gray-200 py-1 z-50 rounded-md"
-                  onMouseEnter={handleProfileMouseEnter}
-                  onMouseLeave={handleProfileMouseLeave}
+                  onMouseEnter={() => {
+                    if (signInTimeoutRef.current) clearTimeout(signInTimeoutRef.current);
+                    setShowDashboardDropdown(false);
+                    setShowProfileDropdown(true);
+                  }}
+                  onMouseLeave={() => {
+                    profileTimeoutRef.current = setTimeout(() => {
+                      setShowProfileDropdown(false);
+                    }, 300);
+                  }}
                 >
                   <Link 
                     href="/saved" 
@@ -140,8 +147,16 @@ export default function Header() {
           ) : (
             <div 
               className="relative"
-              onMouseEnter={handleProfileMouseEnter}
-              onMouseLeave={handleProfileMouseLeave}
+              onMouseEnter={() => {
+                if (profileTimeoutRef.current) clearTimeout(profileTimeoutRef.current);
+                setShowDashboardDropdown(false);
+                setShowSignInDropdown(true);
+              }}
+              onMouseLeave={() => {
+                signInTimeoutRef.current = setTimeout(() => {
+                  setShowSignInDropdown(false);
+                }, 300);
+              }}
             >
               <Link 
                 href="/signin" 
@@ -152,11 +167,19 @@ export default function Header() {
               </Link>
               
               {/* Sign In Dropdown Menu */}
-              {showProfileDropdown && (
+              {showSignInDropdown && (
                 <div 
                   className="absolute top-full right-0 mt-2 w-48 bg-white shadow-lg border border-gray-200 py-1 z-50 rounded-md"
-                  onMouseEnter={handleProfileMouseEnter}
-                  onMouseLeave={handleProfileMouseLeave}
+                  onMouseEnter={() => {
+                    if (profileTimeoutRef.current) clearTimeout(profileTimeoutRef.current);
+                    setShowDashboardDropdown(false);
+                    setShowSignInDropdown(true);
+                  }}
+                  onMouseLeave={() => {
+                    signInTimeoutRef.current = setTimeout(() => {
+                      setShowSignInDropdown(false);
+                    }, 300);
+                  }}
                 >
                   <Link 
                     href="/saved" 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { InteractionPanel } from "./VoteInteractionPanel";
 
 interface Apartment {
   id: string;
@@ -163,6 +164,10 @@ export default function ApartmentGame() {
           >
             ❤️
           </button>
+          {/* Add VoteInteractionPanel for Apartment 1 */}
+          <div className="absolute left-2 top-1/2 -translate-y-1/2 z-20">
+            <InteractionPanel apartmentId={gameState.apartment1.id} side="left" />
+          </div>
         </div>
         {/* VS Divider */}
         <div className="hidden lg:flex items-center justify-center">
@@ -204,6 +209,10 @@ export default function ApartmentGame() {
           >
             ❤️
           </button>
+          {/* Add VoteInteractionPanel for Apartment 2 */}
+          <div className="absolute left-2 top-1/2 -translate-y-1/2 z-20">
+            <InteractionPanel apartmentId={gameState.apartment2.id} side="right" />
+          </div>
         </div>
       </div>
       {gameState.voting && (

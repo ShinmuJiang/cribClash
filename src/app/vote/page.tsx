@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Heart, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import Header from "@/components/Header";
+import { InteractionPanel } from "@/components/VoteInteractionPanel";
 
 // Mock data for apartments
 const mockApartments = [
@@ -238,54 +239,14 @@ export default function VotePage() {
   return (
     <main className="min-h-screen bg-gray-50 pb-12 flex flex-col">
       <Header />
-      {/* Side Icons - Left */}
-      <div className="fixed top-1/2 -translate-y-1/2 z-40 flex flex-col" style={{ left: '2vw', gap: '3vh' }}>
-        <div className="rounded-lg flex items-center justify-center overflow-hidden" style={{ width: '1.71vw', height: '1.71vw', minWidth: '17px', minHeight: '17px' }}>
-          <img 
-            src="/pictures/person.png" 
-            alt="Person" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="rounded-lg flex items-center justify-center overflow-hidden" style={{ width: '1.71vw', height: '1.71vw', minWidth: '17px', minHeight: '17px' }}>
-          <img 
-            src="/pictures/comments.png" 
-            alt="Comments" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="rounded-lg flex items-center justify-center overflow-hidden" style={{ width: '1.71vw', height: '1.71vw', minWidth: '17px', minHeight: '17px' }}>
-          <img 
-            src="/pictures/saved.png" 
-            alt="Saved" 
-            className="w-full h-full object-cover"
-          />
-        </div>
+      {/* Left Apartment Interaction Panel */}
+      <div className="fixed top-1/2 -translate-y-1/2 left-[2vw] z-50">
+        <InteractionPanel apartmentId="smith-hall-204" side="left" />
       </div>
 
-      {/* Side Icons - Right */}
-      <div className="fixed top-1/2 -translate-y-1/2 z-40 flex flex-col" style={{ right: '2vw', gap: '3vh' }}>
-        <div className="rounded-lg flex items-center justify-center overflow-hidden" style={{ width: '1.71vw', height: '1.71vw', minWidth: '17px', minHeight: '17px' }}>
-          <img 
-            src="/pictures/person.png" 
-            alt="Person" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="rounded-lg flex items-center justify-center overflow-hidden" style={{ width: '1.71vw', height: '1.71vw', minWidth: '17px', minHeight: '17px' }}>
-          <img 
-            src="/pictures/comments.png" 
-            alt="Comments" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="rounded-lg flex items-center justify-center overflow-hidden" style={{ width: '1.71vw', height: '1.71vw', minWidth: '17px', minHeight: '17px' }}>
-          <img 
-            src="/pictures/saved.png" 
-            alt="Saved" 
-            className="w-full h-full object-cover"
-          />
-        </div>
+      {/* Right Apartment Interaction Panel */}
+      <div className="fixed top-1/2 -translate-y-1/2 right-[2vw] z-50">
+        <InteractionPanel apartmentId="east-quad-312" side="right" />
       </div>
 
       <div className="flex-1 flex flex-col justify-between max-w-[1800px] mx-auto w-full pt-8 px-4 sm:px-6 lg:px-12">
